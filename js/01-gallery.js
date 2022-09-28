@@ -24,13 +24,23 @@ function createGallaryMarkup(galleryItems) {
 }
 
 
+gallery.addEventListener('click', event => {
+    event.preventDefault();
+    if (event.target.nodeName !== 'IMG') {
+		return
+	}
 
-// console.log(createGallaryMarkup(galleryItems));
+    const selectedImage = event.target.getAttribute('data-source')
 
+    const instance = basicLightbox.create(`
+    <img src="${selectedImage}" width="800" height="600">
+`)
 
-// gallery.addEventListener("click", newVar)
-
-// function newVar(event) = 
-//  event.preventDefault(); //
-// if (e.target.nodeName !== 'IMG') return;
-
+    instance.show()
+    
+    gallery.addEventListener('keydown', event => {
+		if (event.key === 'Escape') {
+			instance.close()
+		}
+	})
+})
